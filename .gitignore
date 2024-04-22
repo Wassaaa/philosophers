@@ -1,0 +1,4 @@
+obj/
+philo
+*.dSYM/
+.DS_Store
