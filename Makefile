@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/22 19:13:54 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/22 19:32:14 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ clean:
 
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(OBJ_DIR)
 
 re: fclean all
 
