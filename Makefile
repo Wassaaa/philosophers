@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/22 19:32:14 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/23 01:00:02 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ M_SRC_DIR		=	.
 INCLUDES		=	.
 M_HEADER		=	$(INCLUDES)/philo.h
 M_OBJECTS		=	$(addprefix $(OBJ_DIR)/, $(M_SRCS:%.c=%.o))
-M_SRCS			=	philo.c
+M_SRCS			=	philo.c ft_atoi.c
 
 ################################################################################
 # RULES
@@ -50,7 +50,7 @@ clean:
 
 
 fclean: clean
-	rm -f $(NAME) $(OBJ_DIR)
+	rm -f $(NAME)
 
 re: fclean all
 
