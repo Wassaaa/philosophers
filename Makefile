@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/22 14:24:44 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/22 19:13:54 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ OBJ_DIR			=	./obj
 ################################################################################
 # MANDATORY
 ################################################################################
-NAME			=	philos
-M_SRC_DIR		=	./philo
-INCLUDES		=	./include
+NAME			=	philo
+M_SRC_DIR		=	.
+INCLUDES		=	.
 M_HEADER		=	$(INCLUDES)/philo.h
 M_OBJECTS		=	$(addprefix $(OBJ_DIR)/, $(M_SRCS:%.c=%.o))
 M_SRCS			=	philo.c
@@ -34,16 +34,14 @@ M_SRCS			=	philo.c
 # RULES
 ################################################################################
 
-vpath %.c $(M_SRC_DIR) $(B_SRC_DIR)
+vpath %.c $(M_SRC_DIR)
 
 all: $(NAME)
-
-bonus: all
 
 $(NAME): $(M_OBJECTS)
 	$(CC_FULL) $(M_OBJECTS) -o $(NAME)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: %.c $(M_HEADER)
 		@mkdir -p $(@D)
 		$(CC_FULL) -c $< -o $@
 
