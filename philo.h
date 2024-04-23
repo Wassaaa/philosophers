@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/23 00:40:21 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/23 11:00:35 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 #include <pthread.h>
+#include <sys/time.h>
 
 typedef struct s_philo
 {
@@ -22,6 +23,8 @@ typedef struct s_philo
 	int				to_die;
 	int				to_eat;
 	int				to_sleep;
+	struct timeval	fed;
+	struct timeval	start;
 	pthread_mutex_t	*forks;
 }					t_philo;
 
