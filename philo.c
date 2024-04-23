@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/24 02:19:30 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/24 02:29:32 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	handle_forks(t_philo *philo)
 			print_message(FORK, philo);
 			break ;
 		}
+		usleep(1000);
 	}
 }
 
