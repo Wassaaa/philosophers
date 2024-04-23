@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/24 02:29:32 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/24 02:37:49 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	verify_existence(t_philo *philo)
 
 int	try_two_forks(t_philo *philo, int left, int right)
 {
+	if (left == right)
+		return (0);
 	pthread_mutex_lock(philo->fork_lock);
 	if (!philo->fork_states[left] && !philo->fork_states[right])
 	{
