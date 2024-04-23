@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/23 11:20:23 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/23 11:29:17 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,22 @@ void	*existential_cycle(void *p)
 		}
 
 		pthread_mutex_lock(&(philo->forks[left_fork]));
-		printf("<%d> %d has taken the left fork\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d has taken a fork\n",get_ms(philo->start), philo->id + 1);
 		pthread_mutex_lock(&(philo->forks[right_fork]));
-		printf("<%d> %d has taken the right fork\n",get_ms(philo->start), philo->id + 1);
-		printf("<%d> %d is eating\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d has taken a fork\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is eating\n",get_ms(philo->start), philo->id + 1);
 		gettimeofday(&philo->fed, NULL);
 		food++;
 		usleep(philo->to_eat * 1000);
-		printf("<%d> %d is sleeping\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is sleeping\n",get_ms(philo->start), philo->id + 1);
 		pthread_mutex_unlock(&(philo->forks[left_fork]));
 		pthread_mutex_unlock(&(philo->forks[right_fork]));
 		usleep(philo->to_sleep * 1000);
-		printf("<%d> %d is thinking\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is thinking\n",get_ms(philo->start), philo->id + 1);
 	}
-	if (food >= 5)
-		printf("<%d> %d is done\n",get_ms(philo->start), philo->id + 1);
-	free(philo);
+	// if (food >= 5)
+	// 	printf("%d %d is done\n",get_ms(philo->start), philo->id + 1);
+	// free(philo);
 	return (NULL);
 }
 
