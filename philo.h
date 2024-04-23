@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/23 16:06:51 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/24 02:00:15 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@
 typedef struct s_philo
 {
 	int				id;
-	int				philos_started;
-	int				*num_philos;
+	int				num_philos;
 	int				to_die;
 	int				to_eat;
 	int				to_sleep;
 	int				food;
 	struct timeval	fed;
 	struct timeval	start;
+	int				*halt_deliberation;
+	int				*fork_states;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*print_lock;
+	pthread_mutex_t	*fork_lock;
 }					t_philo;
 
 typedef enum e_msg
