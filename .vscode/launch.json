@@ -6,7 +6,7 @@
 			"request": "launch",
 			"name": "(lldb) fixed args",
 			"program": "${workspaceFolder}/philo",
-			"args": ["5", "210", "100", "100"],
+			"args": ["3", "220", "100", "100"],
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "make",
 		},

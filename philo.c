@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/23 16:10:18 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:09:34 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,23 @@ int	get_ms(struct timeval start)
 
 void	print_message(t_msg msg, t_philo *philo)
 {
-	pthread_mutex_lock(&philo->print_lock);
+	pthread_mutex_lock(philo->print_lock);
 	if (msg == FORK)
-		printf("%d %d has taken a fork\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d has taken a fork\n", get_ms(philo->start), philo->id + 1);
 	if (msg == EAT)
-		printf("%d %d is eating\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is eating\n", get_ms(philo->start), philo->id + 1);
 	if (msg == SLEEP)
-		printf("%d %d is sleeping\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is sleeping\n", get_ms(philo->start), philo->id + 1);
 	if (msg == THINK)
-		printf("%d %d is thinking\n",get_ms(philo->start), philo->id + 1);
+		printf("%d %d is thinking\n", get_ms(philo->start), philo->id + 1);
 	if (msg == DIE)
 	{
-		printf("%d %d is dead (%d : %d)\n",get_ms(philo->start), philo->id + 1, get_ms(philo->fed), philo->to_die);
+		// printf("%d %d is dead (%d : %d)\n",get_ms(philo->start), philo->id + 1, get_ms(philo->fed), philo->to_die);
+		printf("%d %d died\n",get_ms(philo->start), philo->id + 1);
 		return ;
 	}
+	if (msg != DIE)
+		pthread_mutex_unlock(philo->print_lock);
 }
 
 void	handle_forks(t_philo *philo)
@@ -58,22 +61,25 @@ void	handle_forks(t_philo *philo)
 	left_fork = philo->id;
 	right_fork = (philo->id + 1) % *philo->num_philos;
 	if (philo->id % 2 == 0)
-		{
-			pthread_mutex_lock(&(philo->forks[right_fork]));
-			print_message(FORK, philo);
-			pthread_mutex_unlock(&philo->print_lock);
-		}
+	{
+		pthread_mutex_lock(&(philo->forks[right_fork]));
+		print_message(FORK, philo);
+	}
+	else
+	{
 		pthread_mutex_lock(&(philo->forks[left_fork]));
 		print_message(FORK, philo);
-		pthread_mutex_unlock(&philo->print_lock);
-		if (philo->id % 2 != 0)
-		{
-			pthread_mutex_lock(&(philo->forks[right_fork]));
-			print_message(FORK, philo);
-			pthread_mutex_unlock(&philo->print_lock);
-		}
+	}
+	if (philo->id % 2 != 0)
+	{
+		pthread_mutex_lock(&(philo->forks[right_fork]));
 		print_message(FORK, philo);
-		pthread_mutex_unlock(&philo->print_lock);
+	}
+	else
+	{
+		pthread_mutex_lock(&(philo->forks[left_fork]));
+		print_message(FORK, philo);
+	}
 }
 
 void	*existential_cycle(void *p)
@@ -95,14 +101,14 @@ void	*existential_cycle(void *p)
 		}
 		handle_forks(philo);
 		gettimeofday(&philo->fed, NULL);
-
 		philo->food--;
+		print_message(EAT, philo);
 		usleep(philo->to_eat * 1000);
-		printf("%d %d is sleeping\n",get_ms(philo->start), philo->id + 1);
+		print_message(SLEEP, philo);
 		pthread_mutex_unlock(&(philo->forks[left_fork]));
 		pthread_mutex_unlock(&(philo->forks[right_fork]));
 		usleep(philo->to_sleep * 1000);
-		printf("%d %d is thinking\n",get_ms(philo->start), philo->id + 1);
+		print_message(THINK, philo);
 	}
 	// if (food >= 5)
 	// 	printf("%d %d is done\n",get_ms(philo->start), philo->id + 1);
@@ -167,11 +173,24 @@ int	main(int argc, char **argv)
 			threads[i] = launch_philo(philo);
 			i++;
 		}
+		while (42)
+		{
+			if (*philo.num_philos != philo.philos_started)
+			{
+				i = 0;
+				while (i < philo.philos_started)
+					pthread_detach(threads[i++]);
+				break ;
+			}
+		}
 		i = 0;
 		while (i < *(philo.num_philos))
 			pthread_join(threads[i++], NULL);
+		i = 0;
 		while (i < *(philo.num_philos))
 			pthread_mutex_destroy(&philo.forks[i++]);
+		pthread_mutex_destroy(philo.print_lock);
+		free(philo.print_lock);
 		free(philo.forks);
 	}
 	return (0);
