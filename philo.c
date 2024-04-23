@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/23 11:29:17 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:10:43 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 void	error()
+
 {
 	exit(1);
 }
@@ -92,7 +93,7 @@ pthread_t	launch_philo(t_philo philo)
 {
 	pthread_t		thread;
 	t_philo			*p;
-	
+
 	p = malloc(sizeof(t_philo));
 	*p = philo;
 	gettimeofday(&p->start, NULL);
