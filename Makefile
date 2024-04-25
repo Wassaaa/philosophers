@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/23 01:00:02 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/24 22:55:33 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,44 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+################################################################################
+# VALGRIND
+################################################################################
+
+CC_VG = $(CC) $(CC_STRICT) $(HEADERS)
+
+VG = valgrind
+
+HG_FLAGS = --tool=helgrind
+
+VG_FLAGS = --leak-check=full \
+	--show-leak-kinds=all \
+	--trace-children=yes
+
+VG_LOG_FLAGS = $(VG_FLAGS) \
+	--log-file=$(VG_LOG) \
+	--track-origins=yes \
+	--verbose
+VG_LOG = valgrind_leaks.log
+
+VG_ARGS = 2 100 200 200
+# VG_ARGS = 4 210 100 100 7
+
+hg: vg_build
+	$(VG) $(HG_FLAGS) ./$(NAME) $(VG_ARGS)
+
+vg: vg_build
+	$(VG) $(VG_FLAGS) ./$(NAME) $(VG_ARGS)
+
+vglog: vg_build
+	$(VG) $(VG_LOG_FLAGS) ./$(NAME) $(VG_ARGS)
+
+vg_build: $(M_OBJECTS)
+	$(CC_FULL) $(M_OBJECTS) -o $(NAME)
+
+vglog_clean: fclean
+	rm -f $(VG_LOG)
 
 ################################################################################
 # NORM
