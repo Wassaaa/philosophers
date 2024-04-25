@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/25 05:57:24 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/25 22:02:10 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_philo
 	pthread_mutex_t	*fork_lock;
 	pthread_mutex_t	*halt_lock;
 	pthread_mutex_t	*food_lock;
+	pthread_mutex_t	*start_lock;
 }					t_philo;
 
 typedef enum e_msg

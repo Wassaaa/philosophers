@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/24 22:55:33 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/25 23:14:28 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 # COMPILATION
 ################################################################################
 CC				=	cc
-CC_STRICT		=	-Wall -Wextra -Werror
+CC_STRICT		=	-Wall -Wextra -Werror -pthread
 CC_DEBUG		=	-g #-fsanitize=leak
 HEADERS			=	-I $(INCLUDES)
 CC_FULL			=	$(CC) $(CC_STRICT) $(HEADERS) $(CC_DEBUG)

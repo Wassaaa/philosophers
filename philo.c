@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/25 06:45:21 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/25 23:51:26 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_all(t_philo *philo)
 	destroy_mutex(philo->fork_lock);
 	destroy_mutex(philo->halt_lock);
 	destroy_mutex(philo->food_lock);
+	destroy_mutex(philo->start_lock);
 	if (philo->threads)
 		free(philo->threads);
 	if (philo->halt_deliberation)
@@ -150,37 +151,7 @@ int	try_fork(t_philo *philo, int fork)
 	}
 	pthread_mutex_unlock(philo->fork_lock);
 	return (0);
-}
-
-int	existential_grasp(t_philo *philo)
-{
-	int		right_fork;
-	int		left_fork;
-
-	left_fork = philo->id;
-	right_fork = (philo->id + 1) % philo->num_philos;
-	while (!halt_manager(philo, 0))
-	{
-		if (!verify_existence(philo))
-		{
-			print_message(DIE, philo);
-			break ;
-		}
-		if (!philo->right_fork && philo->id % 2 == 0)
-			philo->right_fork = try_fork(philo, right_fork);
-		if (!philo->left_fork && philo->id % 2 == 1)
-			philo->left_fork = try_fork(philo, left_fork);
-		if (!philo->right_fork && philo->id % 2 == 1)
-			philo->right_fork = try_fork(philo, right_fork);
-		if (!philo->left_fork && philo->id % 2 == 0)
-			philo->left_fork = try_fork(philo, left_fork);
-		if (philo->left_fork && philo->right_fork)
-			break ;
-		usleep(1000);
-	}
-	if (halt_manager(philo, 0))
-		return (0);
-	return (1);
+	usleep(500);
 }
 
 // int	existential_grasp(t_philo *philo)
@@ -197,14 +168,57 @@ int	existential_grasp(t_philo *philo)
 // 			print_message(DIE, philo);
 // 			break ;
 // 		}
-// 		if (try_two_forks(philo, left_fork, right_fork))
-// 		{
-// 			print_message(FORK, philo);
-// 			print_message(FORK, philo);
+// 		philo->right_fork = try_fork(philo, right_fork);
+// 		philo->left_fork = try_fork(philo, left_fork);
+// 		if (philo->left_fork && philo->right_fork)
 // 			break ;
-// 		}
 // 		usleep(1000);
 // 	}
+// 	if (halt_manager(philo, 0))
+// 		return (0);
+// 	return (1);
+// }
+
+int	existential_grasp(t_philo *philo)
+{
+	int		right_fork;
+	int		left_fork;
+
+	left_fork = philo->id;
+	right_fork = (philo->id + 1) % philo->num_philos;
+	while (!halt_manager(philo, 0))
+	{
+		if (!verify_existence(philo))
+		{
+			print_message(DIE, philo);
+			break ;
+		}
+		if (try_two_forks(philo, left_fork, right_fork))
+		{
+			print_message(FORK, philo);
+			print_message(FORK, philo);
+			break ;
+		}
+		usleep(1000
+		);
+	}
+	if (halt_manager(philo, 0))
+		return (0);
+	return (1);
+}
+
+// int	existential_grasp(t_philo *philo)
+// {
+// 	int		right_fork;
+// 	int		left_fork;
+
+// 	left_fork = philo->id;
+// 	right_fork = (philo->id + 1) % philo->num_philos;
+
+// 	pthread_mutex_lock(&(philo->forks[right_fork]));
+// 	print_message(FORK, philo);
+// 	pthread_mutex_lock(&(philo->forks[left_fork]));
+// 	print_message(FORK, philo);
 // 	if (halt_manager(philo, 0))
 // 		return (0);
 // 	return (1);
@@ -254,30 +268,30 @@ int	existential_grasp(t_philo *philo)
 
 // 	left_fork = philo->id;
 // 	right_fork = (philo->id + 1) % philo->num_philos;
-// 	if (philo->id % 2 == 0)
-// 	{
-// 		pthread_mutex_lock(&(philo->forks[right_fork]));
-// 		philo->fork_states[right_fork] = 1;
-// 		print_message(FORK, philo);
-// 	}
-// 	else
-// 	{
-// 		pthread_mutex_lock(&(philo->forks[left_fork]));
-// 		philo->fork_states[left_fork] = 1;
-// 		print_message(FORK, philo);
-// 	}
-// 	if (philo->id % 2 != 0)
-// 	{
-// 		pthread_mutex_lock(&(philo->forks[right_fork]));
-// 		philo->fork_states[right_fork] = 1;
-// 		print_message(FORK, philo);
-// 	}
-// 	else
-// 	{
-// 		pthread_mutex_lock(&(philo->forks[left_fork]));
-// 		philo->fork_states[left_fork] = 1;
-// 		print_message(FORK, philo);
-// 	}
+	// if (philo->id % 2 == 0)
+	// {
+	// 	pthread_mutex_lock(&(philo->forks[right_fork]));
+	// 	philo->fork_states[right_fork] = 1;
+	// 	print_message(FORK, philo);
+	// }
+	// else
+	// {
+	// 	pthread_mutex_lock(&(philo->forks[left_fork]));
+	// 	philo->fork_states[left_fork] = 1;
+	// 	print_message(FORK, philo);
+	// }
+	// if (philo->id % 2 != 0)
+	// {
+	// 	pthread_mutex_lock(&(philo->forks[right_fork]));
+	// 	philo->fork_states[right_fork] = 1;
+	// 	print_message(FORK, philo);
+	// }
+	// else
+	// {
+	// 	pthread_mutex_lock(&(philo->forks[left_fork]));
+	// 	philo->fork_states[left_fork] = 1;
+	// 	print_message(FORK, philo);
+	// }
 // }
 
 int	sentient_pause(int ms, t_philo *philo)
@@ -319,20 +333,23 @@ void	existential_disengagement(t_philo *philo)
 
 int	existential_meal(t_philo *philo)
 {
-		if (!existential_grasp(philo))
-			return (0);
-		gettimeofday(&philo->fed, NULL);
-		print_message(EAT, philo);
-		if (!sentient_pause(philo->to_eat, philo))
-			print_message(DIE, philo);
-		if (--philo->food == 0)
-		{
-			pthread_mutex_lock(philo->food_lock);
-			(*philo->food_finished)++;
-			pthread_mutex_unlock(philo->food_lock);
-		}
+	if (!existential_grasp(philo))
+	{
 		existential_disengagement(philo);
-		return (1);
+		return (0);
+	}
+	gettimeofday(&philo->fed, NULL);
+	print_message(EAT, philo);
+	if (!sentient_pause(philo->to_eat, philo))
+		print_message(DIE, philo);
+	if (--philo->food == 0)
+	{
+		pthread_mutex_lock(philo->food_lock);
+		(*philo->food_finished)++;
+		pthread_mutex_unlock(philo->food_lock);
+	}
+	existential_disengagement(philo);
+	return (1);
 }
 
 void	*existential_cycle(void *p)
@@ -340,6 +357,12 @@ void	*existential_cycle(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
+	pthread_mutex_lock(philo->start_lock);
+	gettimeofday(&philo->start, NULL);
+	pthread_mutex_unlock(philo->start_lock);
+	philo->fed = philo->start;
+	if (philo->id % 2 == 1)
+		sentient_pause(1, philo);
 	while (!halt_manager(philo, 0))
 	{
 		if (!existential_meal(philo))
@@ -417,6 +440,9 @@ int	init_locks(t_philo *philo)
 	philo->food_lock = malloc(sizeof(pthread_mutex_t));
 	if (!philo->food_lock)
 		return (0);
+	philo->start_lock = malloc(sizeof(pthread_mutex_t));
+	if (!philo->start_lock)
+		return (0);
 	if (pthread_mutex_init(philo->print_lock, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(philo->fork_lock, NULL) != 0)
@@ -424,6 +450,8 @@ int	init_locks(t_philo *philo)
 	if (pthread_mutex_init(philo->halt_lock, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(philo->food_lock, NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(philo->start_lock, NULL) != 0)
 		return (0);
 	return (1);
 }
@@ -477,6 +505,7 @@ int	main(int argc, char **argv)
 			return (1);
 		if (init_struct(&philo))
 		{
+			pthread_mutex_lock(philo.start_lock);
 			while (i < philo.num_philos)
 			{
 				philo.id = i;
@@ -488,6 +517,7 @@ int	main(int argc, char **argv)
 				}
 				i++;
 			}
+			pthread_mutex_unlock(philo.start_lock);
 		}
 		if (i == philo.num_philos)
 			zen_monitor(&philo);
