@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 01:20:21 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/26 01:29:58 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	free_all(t_philo *philo)
 			pthread_mutex_destroy(&philo->forks[i++]);
 		free(philo->forks);
 	}
-	destroy_mutex(philo->print_lock);
-	destroy_mutex(philo->fork_lock);
-	destroy_mutex(philo->halt_lock);
-	destroy_mutex(philo->food_lock);
-	destroy_mutex(philo->start_lock);
 	if (philo->threads)
 		free(philo->threads);
 	if (philo->halt_deliberation)
@@ -188,31 +183,6 @@ int	try_two_forks(t_philo *philo, int left, int right)
 	return (0);
 }
 
-// int	existential_grasp(t_philo *philo)
-// {
-// 	int		right_fork;
-// 	int		left_fork;
-
-// 	left_fork = philo->id;
-// 	right_fork = (philo->id + 1) % philo->num_philos;
-// 	while (!halt_manager(philo, 0))
-// 	{
-// 		if (!verify_existence(philo))
-// 		{
-// 			print_message(DIE, philo);
-// 			break ;
-// 		}
-// 		philo->right_fork = try_fork(philo, right_fork);
-// 		philo->left_fork = try_fork(philo, left_fork);
-// 		if (philo->left_fork && philo->right_fork)
-// 			break ;
-// 		usleep(1000);
-// 	}
-// 	if (halt_manager(philo, 0))
-// 		return (0);
-// 	return (1);
-// }
-
 int	existential_grasp(t_philo *philo)
 {
 	int		right_fork;
@@ -235,93 +205,6 @@ int	existential_grasp(t_philo *philo)
 		return (0);
 	return (1);
 }
-
-// int	existential_grasp(t_philo *philo)
-// {
-// 	int		right_fork;
-// 	int		left_fork;
-
-// 	left_fork = philo->id;
-// 	right_fork = (philo->id + 1) % philo->num_philos;
-
-// 	pthread_mutex_lock(&(philo->forks[right_fork]));
-// 	print_message(FORK, philo);
-// 	pthread_mutex_lock(&(philo->forks[left_fork]));
-// 	print_message(FORK, philo);
-// 	if (halt_manager(philo, 0))
-// 		return (0);
-// 	return (1);
-// }
-
-// void	existential_grasp(t_philo *philo)
-// {
-// 	int		right_fork;
-// 	int		left_fork;
-
-// 	left_fork = philo->id;
-// 	right_fork = (philo->id + 1) % philo->num_philos;
-// 	while (!*philo->halt_deliberation)
-// 	{
-// 		if (!verify_existence(philo))
-// 			print_message(DIE, philo);
-// 		if (!philo->fork_states[right_fork] && !philo->fork_states[right_fork])
-// 		{
-// 			if (philo->id % 2 == 0)
-// 			{
-// 				pthread_mutex_lock(&(philo->forks[right_fork]));
-// 				philo->fork_states[right_fork] = 1;
-// 				print_message(FORK, philo);
-// 				pthread_mutex_lock(&(philo->forks[left_fork]));
-// 				philo->fork_states[left_fork] = 1;
-// 				print_message(FORK, philo);
-// 				break ;
-// 			}
-// 			else
-// 			{
-// 				pthread_mutex_lock(&(philo->forks[left_fork]));
-// 				philo->fork_states[left_fork] = 1;
-// 				print_message(FORK, philo);
-// 				pthread_mutex_lock(&(philo->forks[right_fork]));
-// 				philo->fork_states[right_fork] = 1;
-// 				print_message(FORK, philo);
-// 				break ;
-// 			}
-// 		}
-// 	}
-// }
-
-// void	existential_grasp(t_philo *philo)
-// {
-// 	int		right_fork;
-// 	int		left_fork;
-
-// 	left_fork = philo->id;
-// 	right_fork = (philo->id + 1) % philo->num_philos;
-	// if (philo->id % 2 == 0)
-	// {
-	// 	pthread_mutex_lock(&(philo->forks[right_fork]));
-	// 	philo->fork_states[right_fork] = 1;
-	// 	print_message(FORK, philo);
-	// }
-	// else
-	// {
-	// 	pthread_mutex_lock(&(philo->forks[left_fork]));
-	// 	philo->fork_states[left_fork] = 1;
-	// 	print_message(FORK, philo);
-	// }
-	// if (philo->id % 2 != 0)
-	// {
-	// 	pthread_mutex_lock(&(philo->forks[right_fork]));
-	// 	philo->fork_states[right_fork] = 1;
-	// 	print_message(FORK, philo);
-	// }
-	// else
-	// {
-	// 	pthread_mutex_lock(&(philo->forks[left_fork]));
-	// 	philo->fork_states[left_fork] = 1;
-	// 	print_message(FORK, philo);
-	// }
-// }
 
 int	sentient_pause(int ms, t_philo *philo)
 {
