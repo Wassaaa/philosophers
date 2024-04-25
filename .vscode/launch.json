@@ -46,7 +46,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/philo",
-		"args": ["5", "190", "60", "60"],
+		"args": ["200", "190", "60", "60"],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
 		"environment": [],
