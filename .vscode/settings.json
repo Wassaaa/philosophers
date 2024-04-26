@@ -28,7 +28,10 @@
 		"algorithm": "c",
 		"string": "c",
 		"type_traits": "c",
-		"types.h": "c"
+		"types.h": "c",
+		"philo.h": "c",
+		"pthread.h": "c",
+		"time.h": "c"
 	},
 	"cmake.configureOnOpen": false
 }

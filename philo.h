@@ -6,16 +6,19 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 05:16:27 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/26 17:08:41 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <pthread.h>
-#include <sys/time.h>
-#include <string.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <string.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct s_philo
 {
@@ -50,6 +53,17 @@ typedef enum e_msg
 	DIE
 }	t_msg;
 
-int	ft_atoi(const char *str);
+int		ft_atoi(const char *str);
+void	get_args(t_philo *philo, int argc, char **argv);
+int		init_struct(t_philo *philo);
+void	*existential_cycle(void *p);
+void	free_all(t_philo *philo);
+int		sentient_pause(int ms, t_philo *philo);
+int		get_ms(struct timeval start);
+int		verify_existence(t_philo *philo);
+int		halt_manager(t_philo *philo, int to_halt);
+void	start_threads(t_philo *philo, int *i);
+int		get_forks(t_philo *philo, int left, int right);
+void	print_message(t_msg msg, t_philo *philo);
 
 #endif
