@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:43:50 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 16:53:08 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/26 17:44:56 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static int	double_fork(t_philo *philo, int left, int right)
 		philo->fork_states[right] = 1;
 		philo->left_fork = 1;
 		philo->right_fork = 1;
-		pthread_mutex_unlock(philo->fork_lock);
 		pthread_mutex_lock(&(philo->forks[left]));
 		pthread_mutex_lock(&(philo->forks[right]));
+		pthread_mutex_unlock(philo->fork_lock);
 		print_message(FORK, philo);
 		print_message(FORK, philo);
 		return (1);
