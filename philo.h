@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/25 22:02:10 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/26 05:16:27 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <pthread.h>
 #include <sys/time.h>
+#include <string.h>
 
 typedef struct s_philo
 {

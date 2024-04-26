@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 01:29:58 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/26 05:45:52 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	free_all(t_philo *philo)
 	int	i;
 
 	i = 0;
+	destroy_mutex(philo->print_lock);
+	destroy_mutex(philo->fork_lock);
+	destroy_mutex(philo->halt_lock);
+	destroy_mutex(philo->food_lock);
+	destroy_mutex(philo->start_lock);
 	if (philo->forks)
 	{
 		while (i < philo->num_philos)
@@ -346,32 +351,30 @@ void	get_args(t_philo *philo, int argc, char **argv)
 		philo->food = ft_atoi(argv[5]);
 }
 
+int new_mutex(pthread_mutex_t **mutex)
+{
+	*mutex = malloc(sizeof(pthread_mutex_t));
+	if (!*mutex)
+		return (0);
+	if (pthread_mutex_init(*mutex, NULL) != 0)
+	{
+		free(*mutex);
+		*mutex = NULL;
+		return (0);
+	}
+	return (1);
+}
 int	init_locks(t_philo *philo)
 {
-	philo->print_lock = malloc(sizeof(pthread_mutex_t));
-	if (!philo->print_lock)
+	if (!new_mutex(&philo->print_lock))
 		return (0);
-	philo->fork_lock = malloc(sizeof(pthread_mutex_t));
-	if (!philo->fork_lock)
+	if (!new_mutex(&philo->fork_lock))
 		return (0);
-	philo->halt_lock = malloc(sizeof(pthread_mutex_t));
-	if (!philo->halt_lock)
+	if (!new_mutex(&philo->halt_lock))
 		return (0);
-	philo->food_lock = malloc(sizeof(pthread_mutex_t));
-	if (!philo->food_lock)
+	if (!new_mutex(&philo->food_lock))
 		return (0);
-	philo->start_lock = malloc(sizeof(pthread_mutex_t));
-	if (!philo->start_lock)
-		return (0);
-	if (pthread_mutex_init(philo->print_lock, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(philo->fork_lock, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(philo->halt_lock, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(philo->food_lock, NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(philo->start_lock, NULL) != 0)
+	if (!new_mutex(&philo->start_lock))
 		return (0);
 	return (1);
 }
@@ -390,8 +393,6 @@ int	init_struct(t_philo *philo)
 	if (!philo->food_finished)
 		return (0);
 	*philo->food_finished = 0;
-	philo->right_fork = 0;
-	philo->left_fork = 0;
 	return (1);
 }
 
@@ -411,6 +412,23 @@ void	zen_monitor(t_philo *philo)
 	}
 }
 
+void	start_threads(t_philo *philo, int *i)
+{
+	pthread_mutex_lock(philo->start_lock);
+	while (*i < philo->num_philos)
+	{
+		philo->id = *i;
+		philo->threads[*i] = launch_philo(*philo);
+		if (philo->threads[*i] == 0)
+		{
+			halt_manager(philo, 1);
+			break ;
+		}
+		(*i)++;
+	}
+	pthread_mutex_unlock(philo->start_lock);
+}
+
 int	main(int argc, char **argv)
 {
 	t_philo		philo;
@@ -419,26 +437,13 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc >= 5)
 	{
+		memset(&philo, 0, sizeof(t_philo));
 		get_args(&philo, argc, argv);
 		philo.threads = (pthread_t *)malloc(philo.num_philos * sizeof(pthread_t));
 		if (!philo.threads)
 			return (1);
 		if (init_struct(&philo))
-		{
-			pthread_mutex_lock(philo.start_lock);
-			while (i < philo.num_philos)
-			{
-				philo.id = i;
-				philo.threads[i] = launch_philo(philo);
-				if (philo.threads[i] == 0)
-				{
-					halt_manager(&philo, 1);
-					break ;
-				}
-				i++;
-			}
-			pthread_mutex_unlock(philo.start_lock);
-		}
+			start_threads(&philo, &i);
 		if (i == philo.num_philos)
 			zen_monitor(&philo);
 		while (i--)
