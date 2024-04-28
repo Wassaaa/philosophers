@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:10:34 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 00:09:05 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	main(int argc, char **argv)
 	i = 0;
 	if (argc >= 5)
 	{
+		if (!check_args(argc, argv))
+			return (1);
 		memset(&philo, 0, sizeof(t_philo));
 		get_args(&philo, argc, argv);
 		philo.threads = malloc(philo.num_philos * sizeof(pthread_t));

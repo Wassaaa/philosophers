@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/26 17:01:43 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/28 23:24:19 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ INCLUDES		=	.
 M_HEADER		=	$(INCLUDES)/philo.h
 M_OBJECTS		=	$(addprefix $(OBJ_DIR)/, $(M_SRCS:%.c=%.o))
 M_SRCS			=	philo.c ft_atoi.c args.c clean.c forks.c init.c \
-					print.c routine_utils.c routine.c threads.c
+					print.c routine_utils.c routine.c threads.c putstr.c
 
 ################################################################################
 # RULES

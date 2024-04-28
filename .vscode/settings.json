@@ -31,7 +31,8 @@
 		"types.h": "c",
 		"philo.h": "c",
 		"pthread.h": "c",
-		"time.h": "c"
+		"time.h": "c",
+		"typeinfo": "c"
 	},
 	"cmake.configureOnOpen": false
 }

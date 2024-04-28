@@ -6,11 +6,19 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:55:35 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:31:49 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 00:11:18 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo.h>
+
+static void	write_it(char *str, int ms, int id)
+{
+	ft_putnbr_fd(ms, 1);
+	ft_putstr_fd(" ", 1);
+	ft_putnbr_fd(id, 1);
+	ft_putstr_fd(str, 1);
+}
 
 static void	print_it(t_msg msg, t_philo *philo)
 {
@@ -19,14 +27,16 @@ static void	print_it(t_msg msg, t_philo *philo)
 
 	id = philo->id + 1;
 	ms = get_ms(philo->start);
+	if (msg == DIE)
+		write_it(" died\n", ms, id);
 	if (msg == FORK)
-		printf("%d %d has taken a fork\n", ms, id);
+		write_it(" has taken a fork\n", ms, id);
 	if (msg == EAT)
-		printf("%d %d is eating\n", ms, id);
+		write_it(" is eating\n", ms, id);
 	if (msg == SLEEP)
-		printf("%d %d is sleeping\n", ms, id);
+		write_it(" is sleeping\n", ms, id);
 	if (msg == THINK)
-		printf("%d %d is thinking\n", ms, id);
+		write_it(" is thinking\n", ms, id);
 }
 
 void	print_message(t_msg msg, t_philo *philo)
@@ -41,7 +51,7 @@ void	print_message(t_msg msg, t_philo *philo)
 		}
 		if (msg == DIE || !verify_existence(philo))
 		{
-			printf("%d %d died\n", get_ms(philo->start), philo->id + 1);
+			print_it(DIE, philo);
 			halt_manager(philo, 1);
 			pthread_mutex_unlock(philo->print_lock);
 			return ;

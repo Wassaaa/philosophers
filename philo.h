@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:08:41 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 00:10:44 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <string.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -65,5 +64,8 @@ int		halt_manager(t_philo *philo, int to_halt);
 void	start_threads(t_philo *philo, int *i);
 int		get_forks(t_philo *philo, int left, int right);
 void	print_message(t_msg msg, t_philo *philo);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putstr_fd(char *s, int fd);
+int		check_args(int argc, char **argv);
 
 #endif
