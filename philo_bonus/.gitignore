@@ -1,0 +1,5 @@
+obj/
+philo
+*.dSYM/
+.DS_Store
+valgrind_leaks.log
