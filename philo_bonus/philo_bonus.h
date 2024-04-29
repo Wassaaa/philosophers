@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 08:22:28 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:03:00 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 # define FORKS "/forks"
 # define PRINT "/print"
-# define MAX_PHILOS 300
 
 # define ERR_SEM_OPEN "ERROR: sem_open failed"
 # define ERR_SEM_CLOSE "ERROR: sem_close failed"

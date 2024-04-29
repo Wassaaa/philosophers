@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:24:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 08:20:53 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:02:56 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	get_args(t_philo *philo, int argc, char **argv)
 {
 	philo->num_philos = ft_atoi(argv[1]);
-	if (philo->num_philos > MAX_PHILOS)
-		error(philo, 1, ERR_PHILO_MAX);
 	philo->to_die = ft_atoi(argv[2]);
 	philo->to_eat = ft_atoi(argv[3]);
 	philo->to_sleep = ft_atoi(argv[4]);
