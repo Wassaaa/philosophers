@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/28 23:24:19 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/29 04:15:16 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,13 @@ OBJ_DIR			=	./obj
 ################################################################################
 # MANDATORY
 ################################################################################
-NAME			=	philo
+NAME			=	philo_bonus
 M_SRC_DIR		=	.
 INCLUDES		=	.
-M_HEADER		=	$(INCLUDES)/philo.h
+M_HEADER		=	$(INCLUDES)/philo_bonus.h
 M_OBJECTS		=	$(addprefix $(OBJ_DIR)/, $(M_SRCS:%.c=%.o))
-M_SRCS			=	philo.c ft_atoi.c args.c clean.c forks.c init.c \
-					print.c routine_utils.c routine.c threads.c putstr.c
+M_SRCS			=	philo_bonus.c ft_atoi_bonus.c args_bonus.c putstr_bonus.c print_bonus.c \
+					routine_utils_bonus.c
 
 ################################################################################
 # RULES

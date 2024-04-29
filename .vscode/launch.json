@@ -14,45 +14,23 @@
 			"type": "lldb",
 			"request": "launch",
 			"name": "(lldb) philo prompt args",
-			"program": "${workspaceFolder}/philo",
+			"program": "${workspaceFolder}/philo/philo",
 			"args": [],
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "make"
 		},
 	  {
-		"name": "(gdb) prompt args",
+		"name": "(gdb) PHILO fixed args",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "${workspaceFolder}/philo",
-		"args": [
-
-		],
-		"stopAtEntry": false,
-		"cwd": "${workspaceFolder}",
-		"environment": [],
-		"externalConsole": false,
-		"MIMode": "gdb",
-		"preLaunchTask": "make",
-		"setupCommands": [
-		  {
-			"description": "Enable pretty-printing for gdb",
-			"text": "-enable-pretty-printing",
-			"ignoreFailures": true
-		  }
-		]
-	  },
-	  {
-		"name": "(gdb) fixed args",
-		"type": "cppdbg",
-		"request": "launch",
-		"program": "${workspaceFolder}/philo",
+		"program": "${workspaceFolder}/philo/philo",
 		"args": ["200", "160", "50", "50"],
 		"stopAtEntry": false,
-		"cwd": "${workspaceFolder}",
+		"cwd": "${workspaceFolder}/philo",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",
-		"preLaunchTask": "make",
+		"preLaunchTask": "make philo",
 		"setupCommands": [
 		  {
 			"description": "Enable pretty-printing for gdb",
@@ -62,26 +40,57 @@
 		]
 	  },
 	  {
-		"name": "(gdb school) fixed args",
+		"name": "(gdb) BONUS fixed args",
 		"type": "cppdbg",
 		"request": "launch",
-		"program": "${workspaceFolder}/philo",
-		"args": [],
+		"program": "${workspaceFolder}/philo_bonus/philo_bonus",
+		"args": ["9", "800", "200", "200", "6"],
 		"stopAtEntry": false,
-		"cwd": "${workspaceFolder}",
+		"cwd": "${workspaceFolder}/philo_bonus",
 		"environment": [],
 		"externalConsole": false,
 		"MIMode": "gdb",
-		"miDebuggerPath": "/Users/aklein/.brew/bin/gdb",
-		"preLaunchTask": "make",
+		"preLaunchTask": "make philo_bonus",
 		"setupCommands": [
 		  {
 			"description": "Enable pretty-printing for gdb",
 			"text": "-enable-pretty-printing",
 			"ignoreFailures": true
-		  }
+		  },
+		  {
+			"description": "Disable breaking on SIGSTOP",
+			"text": "handle SIGSTOP nostop noprint pass"
+		},
+		{
+			"description": "Disable breaking on SIGCONT",
+			"text": "handle SIGCONT nostop noprint pass"
+		},
+		{
+			"description": "Disable breaking on SIGTERM",
+			"text": "handle SIGTERM nostop noprint pass"
+		},
+		//   {
+		// 	"description": "Follow child processes",
+		// 	"text": "set follow-fork-mode child",
+		// 	"ignoreFailures": true
+		// }
 		]
 	  },
+	  {
+		"name": "(gdb) Attach to Process",
+		"type": "cppdbg",
+		"request": "attach",
+		"program": "${workspaceFolder}/philo_bonus/philo_bonus",
+		"processId": "${command:pickProcess}",
+		"MIMode": "gdb",
+		"setupCommands": [
+			{
+				"description": "Enable pretty-printing for gdb",
+				"text": "-enable-pretty-printing",
+				"ignoreFailures": true
+			}
+		]
+	}
 	],
 	"inputs": [
 		{

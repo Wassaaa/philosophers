@@ -3,9 +3,12 @@
 	  {
 		"name": "mine",
 		"includePath": [
-		  "${workspaceFolder}"
+		  "${workspaceFolder}/philo",
+		  "${workspaceFolder}/philo_bonus"
 		],
-		"defines": [],
+		"defines": [
+			"_POSIX_C_SOURCE 200809L"
+		],
 		"compilerPath": "/usr/bin/gcc",
 		"cStandard": "${default}",
 		"cppStandard": "${default}",

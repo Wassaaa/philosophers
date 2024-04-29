@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:55:35 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 00:11:18 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 07:28:46 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	write_it(char *str, int ms, int id)
 {
-	ft_putnbr_fd(ms, 1);
-	ft_putstr_fd(" ", 1);
-	ft_putnbr_fd(id, 1);
-	ft_putstr_fd(str, 1);
+	ft_putnbr_fd(ms, STDOUT_FILENO);
+	ft_putstr_fd(" ", STDOUT_FILENO);
+	ft_putnbr_fd(id, STDOUT_FILENO);
+	ft_putstr_fd(str, STDOUT_FILENO);
 }
 
 static void	print_it(t_msg msg, t_philo *philo)

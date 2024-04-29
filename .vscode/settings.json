@@ -32,7 +32,11 @@
 		"philo.h": "c",
 		"pthread.h": "c",
 		"time.h": "c",
-		"typeinfo": "c"
+		"typeinfo": "c",
+		"philo_bonus.h": "c",
+		"wait.h": "c",
+		"bitset": "c",
+		"unordered_map": "c"
 	},
 	"cmake.configureOnOpen": false
 }

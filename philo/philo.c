@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 00:09:05 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 00:31:51 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ int	main(int argc, char **argv)
 			pthread_join(philo.threads[i], NULL);
 		free_all(&philo);
 	}
+	else
+		print_usage();
 	return (0);
 }

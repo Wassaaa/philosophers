@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   args.c                                             :+:      :+:    :+:   */
+/*   args_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/26 16:29:53 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 07:28:58 by aklein           ###   ########.fr       */
+/*   Created: 2024/04/29 00:24:42 by aklein            #+#    #+#             */
+/*   Updated: 2024/04/29 08:20:53 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <philo.h>
+#include <philo_bonus.h>
 
 void	get_args(t_philo *philo, int argc, char **argv)
 {
 	philo->num_philos = ft_atoi(argv[1]);
+	if (philo->num_philos > MAX_PHILOS)
+		error(philo, 1, ERR_PHILO_MAX);
 	philo->to_die = ft_atoi(argv[2]);
 	philo->to_eat = ft_atoi(argv[3]);
 	philo->to_sleep = ft_atoi(argv[4]);
@@ -36,8 +38,8 @@ static int	check_arg_content(char *arg)
 
 void	print_usage(void)
 {
-	ft_putstr_fd("Usage: ./philo <philo_count> <time_to_die> <time_to_eat> \
-<time_to_sleep> [times_each_must_eat]\n", 1);
+	ft_putstr_fd("Usage: ./philo_bonus <philo_count> <time_to_die> \
+<time_to_eat> <time_to_sleep> [times_each_must_eat]\n", 1);
 	ft_putstr_fd("Where:\n", 1);
 	ft_putstr_fd("\t- philo_count: Total number of philosophers.\n", 1);
 	ft_putstr_fd("\t- time_to_die: Maximum time (ms) \
@@ -51,7 +53,7 @@ number of meals each philosopher must eat.\n", 1);
 	ft_putstr_fd("Example: \n\t./philo 5 800 200 200 5\n", 1);
 }
 
-int	check_args(int argc, char **argv)
+void	check_args(int argc, char **argv)
 {
 	int	i;
 
@@ -64,9 +66,8 @@ int	check_args(int argc, char **argv)
 			ft_putnbr_fd(i, STDOUT_FILENO);
 			ft_putstr_fd(">\n", STDOUT_FILENO);
 			print_usage();
-			return (0);
+			exit(1);
 		}
 		i++;
 	}
-	return (1);
 }

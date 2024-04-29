@@ -3,40 +3,26 @@
 	"tasks": [
 	  {
 		"type": "cppbuild",
-		"label": "make",
+		"label": "make philo",
 		"command": "/usr/bin/make",
 		"args": [],
 		"options": {
-		  "cwd": "${workspaceFolder}"
+		  "cwd": "${workspaceFolder}/philo"
 		},
 		"problemMatcher": ["$gcc"],
-		"group": {
-		  "kind": "build",
-		  "isDefault": true
-		},
 		"detail": "compiler: /usr/bin/gcc"
 	  },
 	  {
 		"type": "cppbuild",
-		"label": "single_file",
-		"command": "/usr/bin/gcc",
-		"args": [
-			"-fdiagnostics-color=always",
-			"-g",
-			"${file}",
-			"libft/libft.a",
-			"-o",
-			"../src/a.out",
-			"-I../include"
-		],
-		"options": {"cwd": "${workspaceFolder}"},
-		"problemMatcher": ["$gcc"],
-		"group": {
-			"kind": "build",
-			"isDefault": false
+		"label": "make philo_bonus",
+		"command": "/usr/bin/make",
+		"args": [],
+		"options": {
+		  "cwd": "${workspaceFolder}/philo_bonus"
 		},
-		"detail": "singlefile"
-	}
+		"problemMatcher": ["$gcc"],
+		"detail": "compiler: /usr/bin/gcc"
+	  }
 	],
 	"inputs": [
 		{

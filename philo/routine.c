@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:33:19 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:15:14 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 03:06:47 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static int	existential_meal(t_philo *philo)
 		(*philo->food_finished)++;
 		pthread_mutex_unlock(philo->food_lock);
 	}
-	existential_disengagement(philo);
 	return (1);
 }
 
@@ -97,6 +96,7 @@ void	*existential_cycle(void *p)
 		if (!existential_meal(philo))
 			break ;
 		print_message(SLEEP, philo);
+		existential_disengagement(philo);
 		if (!sentient_pause(philo->to_sleep, philo))
 			print_message(DIE, philo);
 		print_message(THINK, philo);
