@@ -67,7 +67,8 @@ void	print_message(t_msg msg, t_philo *philo)
 	{
 		sem_wait(philo->print);
 		print_it(DIE, philo);
-		kill(0, SIGTERM);
+		sem_post(philo->death);
+		return ;
 	}
 	sem_wait(philo->print);
 	print_it(msg, philo);

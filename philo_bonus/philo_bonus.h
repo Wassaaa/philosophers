@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 09:06:00 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 02:12:33 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,16 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <pthread.h>
 
-# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 
 # define FORKS "/forks"
 # define PRINT "/print"
+# define DEATH "/death"
+# define ZEN "/zen"
+# define FED_LOCK "/lock"
 
 # define ERR_SEM_OPEN "ERROR: sem_open failed"
 # define ERR_SEM_CLOSE "ERROR: sem_close failed"
@@ -35,21 +38,27 @@
 # define ERR_TIME "ERROR: gettimeofday failed"
 # define ERR_FORK "ERROR: Fork failed"
 # define ERR_SIGNAL "ERROR: Sending signal failed"
+# define ERR_THREAD_C "ERROR: Thread creation failed"
+# define ERR_THREAD_D "ERROR: Thread detach failed"
+# define ERR_MALLOC "ERROR: Malloc failed"
 
 
 typedef struct s_philo
 {
 	int				id;
 	int				num_philos;
-	pid_t			my_pid;
+	pid_t			*pids;
 	int				to_die;
 	int				to_eat;
 	int				to_sleep;
 	int				food;
 	sem_t			*forks;
 	sem_t			*print;
-	struct timeval	fed;
+	sem_t			*death;
+	sem_t			*zen;
+	sem_t			*lock;
 	struct timeval	start;
+	struct timeval	fed;
 }					t_philo;
 
 typedef enum e_msg
@@ -61,6 +70,7 @@ typedef enum e_msg
 	DIE
 }	t_msg;
 
+void	get_fed(t_philo *philo, int get);
 int		ft_atoi(const char *str);
 int		get_ms(t_philo *philo, struct timeval start);
 int		verify_existence(t_philo *philo);
