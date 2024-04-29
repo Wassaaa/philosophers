@@ -1,5 +1,5 @@
 obj/
-philo
+philo_bonus
 *.dSYM/
 .DS_Store
 valgrind_leaks.log

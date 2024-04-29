@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 09:03:00 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:06:00 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # define ERR_SEM_CLOSE "ERROR: sem_close failed"
 # define ERR_SEM_WAIT "ERROR: sem_wait failed"
 # define ERR_SEM_POST "ERROR: sem_post failed"
-# define ERR_PHILO_MAX "ERROR: too many philosophers"
 # define ERR_TIME "ERROR: gettimeofday failed"
 # define ERR_FORK "ERROR: Fork failed"
 # define ERR_SIGNAL "ERROR: Sending signal failed"
