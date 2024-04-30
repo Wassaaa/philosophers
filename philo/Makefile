@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/28 23:24:19 by aklein           ###   ########.fr        #
+#    Updated: 2024/04/30 10:49:56 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ CC_VG = $(CC) $(CC_STRICT) $(HEADERS)
 
 VG = valgrind
 
-HG_FLAGS = --tool=helgrind
+HG_FLAGS = --tool=helgrind #--suppressions=sup #--gen-suppressions=all --log-file=helgrind.log
 
 VG_FLAGS = --leak-check=full \
 	--show-leak-kinds=all \
@@ -76,7 +76,15 @@ VG_LOG_FLAGS = $(VG_FLAGS) \
 VG_LOG = valgrind_leaks.log
 
 #VG_ARGS = 2 100 200 200
-VG_ARGS = 4 210 100 100 7
+#VG_ARGS = 2 100 200 200 4
+#VG_ARGS = 1 100 200 200
+#VG_ARGS = 1 100 200 200 4
+VG_ARGS = 6 800 200 200 6
+#VG_ARGS = 4 210 100 100 3
+#VG_ARGS = 5 210 100 100 3
+#VG_ARGS = 5 410 100 200 3
+#VG_ARGS = 100 410 100 200 3
+#VG_ARGS = 99 410 100 200 3
 
 hg: vg_build
 	$(VG) $(HG_FLAGS) ./$(NAME) $(VG_ARGS)

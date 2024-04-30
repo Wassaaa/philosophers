@@ -6,9 +6,7 @@
 		  "${workspaceFolder}/philo",
 		  "${workspaceFolder}/philo_bonus"
 		],
-		"defines": [
-			"_POSIX_C_SOURCE 200809L"
-		],
+		"defines": [],
 		"compilerPath": "/usr/bin/gcc",
 		"cStandard": "${default}",
 		"cppStandard": "${default}",
