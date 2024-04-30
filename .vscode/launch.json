@@ -24,7 +24,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "${workspaceFolder}/philo/philo",
-		"args": ["200", "160", "50", "50"],
+		"args": ["5", "160", "50", "50"],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}/philo",
 		"environment": [],
@@ -44,7 +44,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "/home/a/philosophers/philosophers/philo_bonus/philo_bonus",
-		"args": ["5", "800", "300", "200"],
+		"args": ["5", "300", "200", "200", "5"],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}/philo_bonus",
 		"environment": [],
@@ -69,11 +69,11 @@
 			"description": "Disable breaking on SIGTERM",
 			"text": "handle SIGTERM nostop noprint pass"
 		},
-		{
-			"description": "Follow child processes",
-			"text": "set follow-fork-mode child",
-			"ignoreFailures": true
-		}
+		// {
+		// 	"description": "Follow child processes",
+		// 	"text": "-gdb-set follow-fork-mode child",
+		// 	"ignoreFailures": true
+		// }
 		]
 	  },
 	  {

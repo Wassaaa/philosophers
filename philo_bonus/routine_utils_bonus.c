@@ -6,40 +6,35 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:23:56 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 03:40:57 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:05:30 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <philo_bonus.h>
 
-void	get_fed(t_philo *philo, int get)
-{
-	static struct timeval	fed;
-
-	lock_sem(philo, philo->lock);
-	if (get)
-	{
-		philo->fed = fed;
-		unlock_sem(philo, philo->lock);
-		return ;
-	}
-	if (gettimeofday(&fed, NULL) == -1)
-		error(philo, 1, ERR_TIME);
-	unlock_sem(philo, philo->lock);
-}
-
 int	verify_existence(t_philo *philo)
 {
-	int	ms;
+	int				ms;
 	struct timeval	fed;
+	int				die;
 
-	get_fed(philo, 1);
 	lock_sem(philo, philo->lock);
-	fed = philo->fed;
+	fed = *philo->fed;
+	die = *philo->die;
 	unlock_sem(philo, philo->lock);
+	if (die > 0)
+		return (0);
 	ms = get_ms(philo, fed);
 	if (ms >= philo->to_die)
+	{
+		lock_sem(philo, philo->lock);
+		(*philo->die)++;
+		unlock_sem(philo, philo->lock);
+		print_message(DIE, philo);
+		usleep(10000);
+		unlock_sem(philo, philo->print);
 		return (0);
+	}
 	return (1);
 }
 
@@ -56,7 +51,7 @@ int	get_ms(t_philo *philo, struct timeval start)
 	return (elapsed);
 }
 
-void	sentient_pause(int ms, t_philo *philo)
+int	sentient_pause(int ms, t_philo *philo)
 {
 	struct timeval	start;
 	struct timeval	current;
@@ -65,16 +60,19 @@ void	sentient_pause(int ms, t_philo *philo)
 	if (gettimeofday(&start, NULL) == -1)
 		error(philo, 1, ERR_TIME);
 	elapsed = 0;
-	while (elapsed < ms)
+	while (elapsed <= ms)
 	{
 		if (!verify_existence(philo))
-			print_message(DIE, philo);
-		usleep(300);
+			return (0);
+		usleep(500);
+		if (!verify_existence(philo))
+			return (0);
 		if (gettimeofday(&current, NULL) == -1)
 			error(philo, 1, ERR_TIME);
 		elapsed = (current.tv_sec - start.tv_sec) * 1000;
 		elapsed += (current.tv_usec - start.tv_usec) / 1000;
 	}
+	return (1);
 }
 
 void	lock_sem(t_philo *philo, sem_t *sem)

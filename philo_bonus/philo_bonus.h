@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 03:30:04 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:19:04 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERR_FORK "ERROR: Fork failed"
 # define ERR_SIGNAL "ERROR: Sending signal failed"
 # define ERR_THREAD_C "ERROR: Thread creation failed"
-# define ERR_THREAD_D "ERROR: Thread detach failed"
+# define ERR_THREAD_J "ERROR: Thread join failed"
 # define ERR_MALLOC "ERROR: Malloc failed"
 
 
@@ -47,6 +47,9 @@ typedef struct s_philo
 {
 	int				id;
 	int				*die;
+	pthread_t		death_watcher;
+	pthread_t		vitality;
+	pthread_t		waitress;
 	int				num_philos;
 	pid_t			*pids;
 	int				to_die;
@@ -57,8 +60,9 @@ typedef struct s_philo
 	sem_t			*death;
 	sem_t			*zen;
 	sem_t			*lock;
+	sem_t			*print;
 	struct timeval	start;
-	struct timeval	fed;
+	struct timeval	*fed;
 }					t_philo;
 
 typedef enum e_msg
@@ -73,15 +77,12 @@ typedef enum e_msg
 
 void	lock_sem(t_philo *philo, sem_t *sem);
 void	unlock_sem(t_philo *philo, sem_t *sem);
-void	get_fed(t_philo *philo, int get);
 int		ft_atoi(const char *str);
 int		get_ms(t_philo *philo, struct timeval start);
 int		verify_existence(t_philo *philo);
-void	sentient_pause(int ms, t_philo *philo);
+int		sentient_pause(int ms, t_philo *philo);
 void	get_args(t_philo *philo, int argc, char **argv);
 void	print_message(t_msg msg, t_philo *philo);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
 void	check_args(int argc, char **argv);
 void	print_usage(void);
 void	error(t_philo *philo, int ret, char *msg);
