@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 02:12:33 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 03:30:04 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define PRINT "/print"
 # define DEATH "/death"
 # define ZEN "/zen"
-# define FED_LOCK "/lock"
+# define LOCK "/lock"
 
 # define ERR_SEM_OPEN "ERROR: sem_open failed"
 # define ERR_SEM_CLOSE "ERROR: sem_close failed"
@@ -46,6 +46,7 @@
 typedef struct s_philo
 {
 	int				id;
+	int				*die;
 	int				num_philos;
 	pid_t			*pids;
 	int				to_die;
@@ -53,7 +54,6 @@ typedef struct s_philo
 	int				to_sleep;
 	int				food;
 	sem_t			*forks;
-	sem_t			*print;
 	sem_t			*death;
 	sem_t			*zen;
 	sem_t			*lock;
@@ -70,6 +70,9 @@ typedef enum e_msg
 	DIE
 }	t_msg;
 
+
+void	lock_sem(t_philo *philo, sem_t *sem);
+void	unlock_sem(t_philo *philo, sem_t *sem);
 void	get_fed(t_philo *philo, int get);
 int		ft_atoi(const char *str);
 int		get_ms(t_philo *philo, struct timeval start);

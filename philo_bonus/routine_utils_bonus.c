@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:23:56 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 02:12:33 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 03:40:57 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,16 @@ void	get_fed(t_philo *philo, int get)
 {
 	static struct timeval	fed;
 
-	if (sem_wait(philo->lock) == -1)
-		error(philo, 1, ERR_SEM_WAIT);
+	lock_sem(philo, philo->lock);
 	if (get)
 	{
 		philo->fed = fed;
-		if (sem_post(philo->lock) == -1)
-			error(philo, 1, ERR_SEM_POST);
+		unlock_sem(philo, philo->lock);
 		return ;
 	}
 	if (gettimeofday(&fed, NULL) == -1)
 		error(philo, 1, ERR_TIME);
-	if (sem_post(philo->lock) == -1)
-		error(philo, 1, ERR_SEM_POST);
+	unlock_sem(philo, philo->lock);
 }
 
 int	verify_existence(t_philo *philo)
@@ -37,11 +34,9 @@ int	verify_existence(t_philo *philo)
 	struct timeval	fed;
 
 	get_fed(philo, 1);
-	if (sem_wait(philo->lock) == -1)
-		error(philo, 1, ERR_SEM_WAIT);
+	lock_sem(philo, philo->lock);
 	fed = philo->fed;
-	if (sem_post(philo->lock) == -1)
-		error(philo, 1, ERR_SEM_POST);
+	unlock_sem(philo, philo->lock);
 	ms = get_ms(philo, fed);
 	if (ms >= philo->to_die)
 		return (0);
@@ -80,4 +75,16 @@ void	sentient_pause(int ms, t_philo *philo)
 		elapsed = (current.tv_sec - start.tv_sec) * 1000;
 		elapsed += (current.tv_usec - start.tv_usec) / 1000;
 	}
+}
+
+void	lock_sem(t_philo *philo, sem_t *sem)
+{
+	if (sem_wait(sem) == -1)
+		error(philo, 1, ERR_SEM_WAIT);
+}
+
+void	unlock_sem(t_philo *philo, sem_t *sem)
+{
+	if (sem_post(sem) == -1)
+		error(philo, 1, ERR_SEM_POST);
 }

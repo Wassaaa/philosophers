@@ -44,7 +44,7 @@
 		"type": "cppdbg",
 		"request": "launch",
 		"program": "/home/a/philosophers/philosophers/philo_bonus/philo_bonus",
-		"args": ["4", "800", "200", "200", "6"],
+		"args": ["5", "800", "300", "200"],
 		"stopAtEntry": false,
 		"cwd": "${workspaceFolder}/philo_bonus",
 		"environment": [],

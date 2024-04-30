@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:25:09 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 02:17:53 by aklein           ###   ########.fr       */
+/*   Updated: 2024/04/30 03:57:00 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 void	close_sems(t_philo *philo)
 {
-	if (philo->death)
+	if (philo->death && philo->death != SEM_FAILED)
 	{
-		sem_post(philo->death);
+		unlock_sem(philo, philo->death);
 		sem_close(philo->death);
 	}
-	if (philo->forks)
+	if (philo->forks && philo->forks != SEM_FAILED)
 		sem_close(philo->forks);
-	if (philo->print)
-		sem_close(philo->print);
-	if (philo->zen)
+	if (philo->zen && philo->zen != SEM_FAILED)
 		sem_close(philo->zen);
-	if (philo->lock)
+	if (philo->lock && philo->lock != SEM_FAILED)
 		sem_close(philo->lock);
 	sem_unlink(FORKS);
-	sem_unlink(PRINT);
 	sem_unlink(DEATH);
 	sem_unlink(ZEN);
-	sem_unlink(FED_LOCK);
+	sem_unlink(LOCK);
 }
 
 void	error(t_philo *philo, int ret, char *msg)
@@ -43,15 +40,18 @@ void	error(t_philo *philo, int ret, char *msg)
 	}
 	if (philo->lock)
 	{
-		if (sem_wait(philo->lock) == -1)
-			error(philo, 1, ERR_SEM_WAIT);
+		lock_sem(philo, philo->lock);
 		if (philo->pids)
 		{
 			free(philo->pids);
 			philo->pids = NULL;
 		}
-		if (sem_post(philo->lock) == -1)
-			error(philo, 1, ERR_SEM_POST);
+		if (philo->die)
+		{
+			free(philo->die);
+			philo->die = NULL;
+		}
+		unlock_sem(philo, philo->lock);
 	}
 	close_sems(philo);
 	exit(ret);
@@ -62,39 +62,35 @@ void	pre_life(t_philo *philo)
 	if (gettimeofday(&philo->start, NULL) == -1)
 		error(philo, 1, ERR_TIME);
 	get_fed(philo, 0);
+	lock_sem(philo, philo->lock);
+	philo->die = malloc(sizeof(int));
+	*philo->die = 0;
+	unlock_sem(philo, philo->lock);
 }
 
 void	existential_meal(t_philo *philo)
 {
-	if (sem_wait(philo->forks) == -1)
-		error(philo, 1, ERR_SEM_WAIT);
+	lock_sem(philo, philo->forks);
 	print_message(FORK, philo);
 	if (philo->num_philos == 1)
 		sentient_pause(philo->to_die * 2, philo);
-	if (sem_wait(philo->forks) == -1)
-		error(philo, 1, ERR_SEM_WAIT);
+	lock_sem(philo, philo->forks);
 	print_message(FORK, philo);
 	print_message(EAT, philo);
 	get_fed(philo, 0);
 	sentient_pause(philo->to_eat, philo);
 	print_message(SLEEP, philo);
 	if (--philo->food == 0)
-	{
-		if (sem_post(philo->zen) == -1)
-			error(philo, 1, ERR_SEM_POST);
-	}
+		unlock_sem(philo, philo->zen);
 }
 
 void	existential_cycle(t_philo *philo)
 {
-	pre_life(philo);
 	while (42)
 	{
 		existential_meal(philo);
-		if (sem_post(philo->forks) == -1)
-			error(philo, 1, ERR_SEM_POST);
-		if (sem_post(philo->forks) == -1)
-			error(philo, 1, ERR_SEM_POST);
+		unlock_sem(philo, philo->forks);
+		unlock_sem(philo, philo->forks);
 		sentient_pause(philo->to_sleep, philo);
 		print_message(THINK, philo);
 	}
@@ -103,19 +99,20 @@ void	existential_cycle(t_philo *philo)
 void	*waitress(void *p)
 {
 	t_philo	*philo;
-	int	zen_reached;
+	int		zen_reached;
 
 	philo = (t_philo *)p;
 	zen_reached = 0;
 	while (42)
 	{
-		sem_wait(philo->zen);
+		lock_sem(philo, philo->zen);
 		if (++zen_reached >= philo->num_philos)
 		{
-			sem_wait(philo->print);
+			lock_sem(philo, philo->lock);
 			ft_putstr_fd("all philos have eaten at least ", 1);
 			ft_putnbr_fd(philo->food, 1);
 			ft_putstr_fd(" meals\n", 1);
+			unlock_sem(philo, philo->lock);
 			error(philo, 0, NULL);
 		}
 	}
@@ -138,10 +135,11 @@ void	*death_watcher(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	if (sem_wait(philo->death) == -1)
-		error(philo, 1, ERR_SEM_WAIT);
-	if (sem_post(philo->death) == -1)
-		error(philo, 1, ERR_SEM_POST);
+	lock_sem(philo, philo->death);
+	unlock_sem(philo, philo->death);
+	lock_sem(philo, philo->lock);
+	*philo->die = 1;
+	unlock_sem(philo, philo->lock);
 	error(philo, 0, NULL);
 	return (NULL);
 }
@@ -151,6 +149,7 @@ void	start_philo(t_philo *philo)
 	pthread_t	death;
 	pthread_t	vitality;
 
+	pre_life(philo);
 	if (pthread_create(&death, NULL, &death_watcher, philo) != 0)
 		error(philo, 1, ERR_THREAD_C);
 	if (pthread_detach(death) != 0)
@@ -203,15 +202,11 @@ void	start_philos(t_philo *philo)
 void	start_sem(t_philo *philo)
 {
 	sem_unlink(FORKS);
-	sem_unlink(PRINT);
 	sem_unlink(DEATH);
 	sem_unlink(ZEN);
-	sem_unlink(FED_LOCK);
+	sem_unlink(LOCK);
 	philo->forks = sem_open(FORKS, O_CREAT, 0600, philo->num_philos);
 	if (philo->forks == SEM_FAILED)
-		error(philo, 1, ERR_SEM_OPEN);
-	philo->print = sem_open(PRINT, O_CREAT, 0600, 1);
-	if (philo->print == SEM_FAILED)
 		error(philo, 1, ERR_SEM_OPEN);
 	philo->death = sem_open(DEATH, O_CREAT, 0600, 0);
 	if (philo->death == SEM_FAILED)
@@ -219,7 +214,7 @@ void	start_sem(t_philo *philo)
 	philo->zen = sem_open(ZEN, O_CREAT, 0600, 0);
 	if (philo->zen == SEM_FAILED)
 		error(philo, 1, ERR_SEM_OPEN);
-	philo->lock = sem_open(FED_LOCK, O_CREAT, 0600, 1);
+	philo->lock = sem_open(LOCK, O_CREAT, 0600, 1);
 	if (philo->lock == SEM_FAILED)
 		error(philo, 1, ERR_SEM_OPEN);
 }

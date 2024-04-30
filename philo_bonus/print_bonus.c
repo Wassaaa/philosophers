@@ -25,6 +25,8 @@ static void	print_it(t_msg msg, t_philo *philo)
 	int	id;
 	int	ms;
 
+	if (*philo->die == 1)
+		return ;
 	id = philo->id + 1;
 	ms = get_ms(philo, philo->start);
 	if (msg == DIE)
@@ -63,14 +65,15 @@ static void	print_it(t_msg msg, t_philo *philo)
 
 void	print_message(t_msg msg, t_philo *philo)
 {
-	if (msg == DIE || !verify_existence(philo))
+	lock_sem(philo, philo->lock);
+	if (msg == DIE)
 	{
-		sem_wait(philo->print);
 		print_it(DIE, philo);
-		sem_post(philo->death);
+		*philo->die = 1;
+		unlock_sem(philo, philo->lock);
+		unlock_sem(philo, philo->death);
 		return ;
 	}
-	sem_wait(philo->print);
 	print_it(msg, philo);
-	sem_post(philo->print);
+	unlock_sem(philo, philo->lock);
 }
