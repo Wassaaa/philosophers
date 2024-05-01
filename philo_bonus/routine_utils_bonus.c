@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:23:56 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 10:05:30 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:49:05 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ int	sentient_pause(int ms, t_philo *philo)
 		if (!verify_existence(philo))
 			return (0);
 		usleep(500);
-		if (!verify_existence(philo))
-			return (0);
 		if (gettimeofday(&current, NULL) == -1)
 			error(philo, 1, ERR_TIME);
 		elapsed = (current.tv_sec - start.tv_sec) * 1000;

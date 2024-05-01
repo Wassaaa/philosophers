@@ -4,20 +4,20 @@
 		{
 			"type": "lldb",
 			"request": "launch",
-			"name": "(lldb) fixed args",
-			"program": "${workspaceFolder}/philo",
-			"args": ["200", "220", "100", "100"],
+			"name": "(lldb) philo bonus",
+			"program": "${workspaceFolder}/philo_bonus/philo_bonus",
+			"args": ["6", "210", "100", "100", "10"],
 			"cwd": "${workspaceFolder}",
-			"preLaunchTask": "make",
+			"preLaunchTask": "make philo_bonus",
 		},
 		{
 			"type": "lldb",
 			"request": "launch",
-			"name": "(lldb) philo prompt args",
+			"name": "(lldb) philo",
 			"program": "${workspaceFolder}/philo/philo",
-			"args": [],
+			"args": ["5", "190", "60", "60"],
 			"cwd": "${workspaceFolder}",
-			"preLaunchTask": "make"
+			"preLaunchTask": "make philo"
 		},
 	  {
 		"name": "(gdb) PHILO fixed args",
