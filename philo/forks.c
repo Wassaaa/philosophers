@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:43:50 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:44:56 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:46:05 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	get_forks(t_philo *philo, int left, int right)
 				philo->right_fork = 1;
 			if (philo->right_fork && philo->left_fork)
 				return (1);
+			if (!philo->thinking)
+				print_message(THINK, philo);
 			usleep(100);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:55:35 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 07:28:46 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/01 18:05:08 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static void	print_it(t_msg msg, t_philo *philo)
 	int	id;
 	int	ms;
 
+	if (msg == THINK)
+		philo->thinking = 1;
+	if (msg == DIE || msg == EAT || msg == SLEEP)
+		philo->thinking = 0;
 	id = philo->id + 1;
 	ms = get_ms(philo->start);
 	if (msg == DIE)

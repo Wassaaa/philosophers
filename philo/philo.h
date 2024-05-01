@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 00:31:34 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/01 17:39:38 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_philo
 	int				to_eat;
 	int				to_sleep;
 	int				food;
+	int				thinking;
 	int				right_fork;
 	int				left_fork;
 	struct timeval	fed;
