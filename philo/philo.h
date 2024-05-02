@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:09:47 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:50:51 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	start_threads(t_philo *philo, int *i);
 int		get_forks(t_philo *philo, int left, int right);
 void	print_message(t_msg msg, t_philo *philo);
 int		check_args(int argc, char **argv);
-void	print_usage(void);
 void	*my_mal(t_philo *philo, size_t size);
 int		unlock_mutex(t_philo *philo, pthread_mutex_t *mut);
 int		lock_mutex(t_philo *philo, pthread_mutex_t *mut);

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 10:19:04 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:50:23 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,17 +74,19 @@ typedef enum e_msg
 	DIE
 }	t_msg;
 
-
+void	check_args(int argc, char **argv);
+void	get_args(t_philo *philo, int argc, char **argv);
+void	start_sem(t_philo *philo);
+void	start_philos(t_philo *philo);
+int		sentient_pause(int ms, t_philo *philo);
+int		verify_existence(t_philo *philo);
+void	existential_cycle(t_philo *philo);
+void	call_waitress(t_philo *philo);
+void	error(t_philo *philo, int ret, char *msg);
 void	lock_sem(t_philo *philo, sem_t *sem);
 void	unlock_sem(t_philo *philo, sem_t *sem);
 int		ft_atoi(const char *str);
 int		get_ms(t_philo *philo, struct timeval start);
-int		verify_existence(t_philo *philo);
-int		sentient_pause(int ms, t_philo *philo);
-void	get_args(t_philo *philo, int argc, char **argv);
 void	print_message(t_msg msg, t_philo *philo);
-void	check_args(int argc, char **argv);
-void	print_usage(void);
-void	error(t_philo *philo, int ret, char *msg);
 
 #endif

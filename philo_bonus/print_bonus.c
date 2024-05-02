@@ -12,14 +12,6 @@
 
 #include <philo_bonus.h>
 
-// static void	write_it(char *str, int ms, int id)
-// {
-// 	ft_putnbr_fd(ms, STDOUT_FILENO);
-// 	ft_putstr_fd(" ", STDOUT_FILENO);
-// 	ft_putnbr_fd(id, STDOUT_FILENO);
-// 	ft_putstr_fd(str, STDOUT_FILENO);
-// }
-
 static void	print_it(t_msg msg, t_philo *philo)
 {
 	int	id;
@@ -40,28 +32,6 @@ static void	print_it(t_msg msg, t_philo *philo)
 	if (msg == THINK)
 		printf("%d %d is thinking\n", ms, id);
 }
-
-// void	print_message(t_msg msg, t_philo *philo)
-// {
-// 	if (!halt_manager(philo, 0))
-// 	{
-// 		pthread_mutex_lock(philo->print_lock);
-// 		if (halt_manager(philo, 0))
-// 		{
-// 			pthread_mutex_unlock(philo->print_lock);
-// 			return ;
-// 		}
-// 		if (msg == DIE || !verify_existence(philo))
-// 		{
-// 			print_it(DIE, philo);
-// 			halt_manager(philo, 1);
-// 			pthread_mutex_unlock(philo->print_lock);
-// 			return ;
-// 		}
-// 		print_it(msg, philo);
-// 		pthread_mutex_unlock(philo->print_lock);
-// 	}
-// }
 
 void	print_message(t_msg msg, t_philo *philo)
 {

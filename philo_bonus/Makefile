@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/04/30 10:40:21 by aklein           ###   ########.fr        #
+#    Updated: 2024/05/02 11:48:40 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ INCLUDES		=	.
 M_HEADER		=	$(INCLUDES)/philo_bonus.h
 M_OBJECTS		=	$(addprefix $(OBJ_DIR)/, $(M_SRCS:%.c=%.o))
 M_SRCS			=	philo_bonus.c ft_atoi_bonus.c args_bonus.c print_bonus.c \
-					routine_utils_bonus.c
+					routine_utils_bonus.c error_bonus.c philo_life_bonus.c \
+					routine_bonus.c waitress_bonus.c init_sem_bonus.c
 
 ################################################################################
 # RULES

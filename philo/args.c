@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:53 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:00:52 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:46:35 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	check_arg_content(char *arg)
 	return (1);
 }
 
-void	print_usage(void)
+static void	print_usage(void)
 {
 	printf("Usage: ./philo_bonus <philo_count> <time_to_die> "
 		"<time_to_eat> <time_to_sleep> [times_each_must_eat]\n"
