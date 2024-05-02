@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 07:36:49 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 08:28:25 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ void	zen_monitor(t_philo *philo)
 	}
 }
 
-int	end(t_philo *philo)
+int	log_err(t_philo *philo, char *err)
 {
-	if (philo->err)
+	static int	exit = 0;
+
+	if (err)
 	{
-		printf("%s\n", philo->err);
-		return (1);
+		halt_manager(philo, 1);
+		printf("%s\n", err);
+		exit = 1;
 	}
-	return (0);
+	return (exit);
 }
 
 int	main(int argc, char **argv)
@@ -43,25 +46,22 @@ int	main(int argc, char **argv)
 	t_philo		philo;
 	int			i;
 
-	i = 0;
-	if (argc >= 5)
+	if (!check_args(argc, argv))
+		return (1);
+	memset(&philo, 0, sizeof(t_philo));
+	get_args(&philo, argc, argv);
+	philo.threads = malloc(philo.num_philos * sizeof(pthread_t));
+	if (!philo.threads)
+		return (log_err(&philo, ERR_MALLOC));
+	if (init_struct(&philo))
+		start_threads(&philo, &i);
+	if (i == philo.num_philos)
+		zen_monitor(&philo);
+	while (i--)
 	{
-		if (!check_args(argc, argv))
-			return (1);
-		memset(&philo, 0, sizeof(t_philo));
-		get_args(&philo, argc, argv);
-		philo.threads = malloc(philo.num_philos * sizeof(pthread_t));
-		if (!philo.threads)
-			return (end(&philo));
-		if (init_struct(&philo))
-			start_threads(&philo, &i);
-		if (i == philo.num_philos)
-			zen_monitor(&philo);
-		while (i--)
-			pthread_join(philo.threads[i], NULL);
-		free_all(&philo);
+		if (pthread_join(philo.threads[i], NULL) != 0)
+			log_err(&philo, ERR_THR_J);
 	}
-	else
-		print_usage();
-	return (end(&philo));
+	free_all(&philo);
+	return (log_err(&philo, NULL));
 }

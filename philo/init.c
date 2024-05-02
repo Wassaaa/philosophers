@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:25:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 07:07:37 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 08:09:31 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	init_forks(t_philo *philo)
 	philo->fork_states = malloc (philo->num_philos * sizeof(int));
 	if (!philo->forks || !philo->fork_states)
 	{
-		philo->err = ERR_MALLOC;
+		log_err(philo, ERR_MALLOC);
 		return (0);
 	}
 	while (i < philo->num_philos)
@@ -31,7 +31,7 @@ static int	init_forks(t_philo *philo)
 		{
 			while (i--)
 				pthread_mutex_destroy(&philo->forks[i]);
-			philo->err = ERR_MUT_INIT;
+			log_err(philo, ERR_MUT_INIT);
 			return (0);
 		}
 		i++;
@@ -44,12 +44,12 @@ static int	new_mutex(t_philo *philo, pthread_mutex_t **mutex)
 	*mutex = malloc(sizeof(pthread_mutex_t));
 	if (!*mutex)
 	{
-		philo->err = ERR_MALLOC;
+		log_err(philo, ERR_MALLOC);
 		return (0);
 	}
 	if (pthread_mutex_init(*mutex, NULL) != 0)
 	{
-		philo->err = ERR_MUT_INIT;
+		log_err(philo, ERR_MUT_INIT);
 		free(*mutex);
 		*mutex = NULL;
 		return (0);
@@ -81,14 +81,14 @@ int	init_struct(t_philo *philo)
 	philo->halt_deliberation = malloc(sizeof(int));
 	if (!philo->halt_deliberation)
 	{
-		philo->err = ERR_MALLOC;
+		log_err(philo, ERR_MALLOC);
 		return (0);
 	}
 	*philo->halt_deliberation = 0;
 	philo->food_finished = malloc(sizeof(int));
 	if (!philo->food_finished)
 	{
-		philo->err = ERR_MALLOC;
+		log_err(philo, ERR_MALLOC);
 		return (0);
 	}
 	*philo->food_finished = 0;

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:39:39 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 07:19:42 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 08:11:55 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	halt_manager(t_philo *philo, int to_halt)
 {
 	int	status;
 
+	if (!philo->halt_deliberation || !philo->halt_lock)
+		return (1);
 	if (to_halt)
 	{
 		lock_mutex(philo, philo->halt_lock);

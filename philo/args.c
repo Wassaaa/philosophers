@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:53 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 06:41:40 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 08:25:12 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	check_args(int argc, char **argv)
 {
 	int	i;
 
+	if (argc < 5 || argc > 6)
+	{
+		print_usage();
+		return (0);
+	}
 	i = 1;
 	while (i < argc)
 	{
