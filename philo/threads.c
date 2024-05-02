@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:21 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:08:17 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 07:32:38 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static pthread_t	launch_philo(t_philo philo)
 
 void	start_threads(t_philo *philo, int *i)
 {
-	pthread_mutex_lock(philo->start_lock);
+	lock_mutex(philo, philo->start_lock);
 	while (*i < philo->num_philos)
 	{
 		philo->id = *i;
@@ -42,5 +42,5 @@ void	start_threads(t_philo *philo, int *i)
 		}
 		(*i)++;
 	}
-	pthread_mutex_unlock(philo->start_lock);
+	unlock_mutex(philo, philo->start_lock);
 }

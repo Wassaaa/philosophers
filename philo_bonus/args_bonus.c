@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:24:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/30 10:14:43 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 06:13:20 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	check_arg_content(char *arg)
 
 void	print_usage(void)
 {
-printf("Usage: ./philo_bonus <philo_count> <time_to_die> "
+	printf("Usage: ./philo_bonus <philo_count> <time_to_die> "
 		"<time_to_eat> <time_to_sleep> [times_each_must_eat]\n"
        "Where:\n"
        "\t- philo_count: Total number of philosophers.\n"

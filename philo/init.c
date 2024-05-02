@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:25:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 16:32:50 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 07:07:37 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	init_forks(t_philo *philo)
 	philo->forks = malloc(philo->num_philos * sizeof(pthread_mutex_t));
 	philo->fork_states = malloc (philo->num_philos * sizeof(int));
 	if (!philo->forks || !philo->fork_states)
+	{
+		philo->err = ERR_MALLOC;
 		return (0);
+	}
 	while (i < philo->num_philos)
 	{
 		philo->fork_states[i] = 0;
@@ -28,6 +31,7 @@ static int	init_forks(t_philo *philo)
 		{
 			while (i--)
 				pthread_mutex_destroy(&philo->forks[i]);
+			philo->err = ERR_MUT_INIT;
 			return (0);
 		}
 		i++;
@@ -35,13 +39,17 @@ static int	init_forks(t_philo *philo)
 	return (1);
 }
 
-static int	new_mutex(pthread_mutex_t **mutex)
+static int	new_mutex(t_philo *philo, pthread_mutex_t **mutex)
 {
 	*mutex = malloc(sizeof(pthread_mutex_t));
 	if (!*mutex)
+	{
+		philo->err = ERR_MALLOC;
 		return (0);
+	}
 	if (pthread_mutex_init(*mutex, NULL) != 0)
 	{
+		philo->err = ERR_MUT_INIT;
 		free(*mutex);
 		*mutex = NULL;
 		return (0);
@@ -51,15 +59,15 @@ static int	new_mutex(pthread_mutex_t **mutex)
 
 static int	init_locks(t_philo *philo)
 {
-	if (!new_mutex(&philo->print_lock))
+	if (!new_mutex(philo, &philo->print_lock))
 		return (0);
-	if (!new_mutex(&philo->fork_lock))
+	if (!new_mutex(philo, &philo->fork_lock))
 		return (0);
-	if (!new_mutex(&philo->halt_lock))
+	if (!new_mutex(philo, &philo->halt_lock))
 		return (0);
-	if (!new_mutex(&philo->food_lock))
+	if (!new_mutex(philo, &philo->food_lock))
 		return (0);
-	if (!new_mutex(&philo->start_lock))
+	if (!new_mutex(philo, &philo->start_lock))
 		return (0);
 	return (1);
 }
@@ -72,11 +80,17 @@ int	init_struct(t_philo *philo)
 		return (0);
 	philo->halt_deliberation = malloc(sizeof(int));
 	if (!philo->halt_deliberation)
+	{
+		philo->err = ERR_MALLOC;
 		return (0);
+	}
 	*philo->halt_deliberation = 0;
 	philo->food_finished = malloc(sizeof(int));
 	if (!philo->food_finished)
+	{
+		philo->err = ERR_MALLOC;
 		return (0);
+	}
 	*philo->food_finished = 0;
 	return (1);
 }

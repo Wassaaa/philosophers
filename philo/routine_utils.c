@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:39:39 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/26 17:08:56 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 07:19:42 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,16 @@ int	halt_manager(t_philo *philo, int to_halt)
 
 	if (to_halt)
 	{
-		pthread_mutex_lock(philo->halt_lock);
+		lock_mutex(philo, philo->halt_lock);
 		*philo->halt_deliberation = 1;
-		pthread_mutex_unlock(philo->halt_lock);
+		unlock_mutex(philo, philo->halt_lock);
 		status = 1;
 	}
 	else
 	{
-		pthread_mutex_lock(philo->halt_lock);
+		lock_mutex(philo, philo->halt_lock);
 		status = *philo->halt_deliberation;
-		pthread_mutex_unlock(philo->halt_lock);
+		unlock_mutex(philo, philo->halt_lock);
 	}
 	return (status);
 }

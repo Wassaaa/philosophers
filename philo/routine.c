@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:33:19 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/01 17:54:42 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 07:19:42 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static void	existential_disengagement(t_philo *philo)
 	right_fork = (philo->id + 1) % philo->num_philos;
 	if (philo->left_fork)
 	{
-		pthread_mutex_unlock(&(philo->forks[left_fork]));
+		unlock_mutex(philo, &(philo->forks[left_fork]));
 		philo->left_fork = 0;
-		pthread_mutex_lock(philo->fork_lock);
+		lock_mutex(philo, philo->fork_lock);
 		philo->fork_states[left_fork] = 0;
-		pthread_mutex_unlock(philo->fork_lock);
+		unlock_mutex(philo, philo->fork_lock);
 	}
 	if (philo->right_fork)
 	{
 		philo->right_fork = 0;
-		pthread_mutex_unlock(&(philo->forks[right_fork]));
-		pthread_mutex_lock(philo->fork_lock);
+		unlock_mutex(philo, &(philo->forks[right_fork]));
+		lock_mutex(philo, philo->fork_lock);
 		philo->fork_states[right_fork] = 0;
-		pthread_mutex_unlock(philo->fork_lock);
+		unlock_mutex(philo, philo->fork_lock);
 	}
 }
 
@@ -75,9 +75,9 @@ static int	existential_meal(t_philo *philo)
 		print_message(DIE, philo);
 	if (--philo->food == 0)
 	{
-		pthread_mutex_lock(philo->food_lock);
+		lock_mutex(philo, philo->food_lock);
 		(*philo->food_finished)++;
-		pthread_mutex_unlock(philo->food_lock);
+		unlock_mutex(philo, philo->food_lock);
 	}
 	return (1);
 }
@@ -87,9 +87,9 @@ void	*existential_cycle(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	pthread_mutex_lock(philo->start_lock);
+	lock_mutex(philo, philo->start_lock);
 	gettimeofday(&philo->start, NULL);
-	pthread_mutex_unlock(philo->start_lock);
+	unlock_mutex(philo, philo->start_lock);
 	philo->fed = philo->start;
 	if (philo->id % 2 == 1)
 		sentient_pause(1, philo);

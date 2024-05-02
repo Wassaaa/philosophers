@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/01 17:39:38 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 07:20:04 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdio.h>
+
+# define ERR_MALLOC "ERROR: malloc error"
+# define ERR_MUT_INIT "ERROR: mutex init error"
+# define ERR_MUT_LOCK "ERROR: mutex lock error"
+# define ERR_MUT_UNLOCK "ERROR: mutex unlock error"
 
 typedef struct s_philo
 {
@@ -42,6 +48,7 @@ typedef struct s_philo
 	pthread_mutex_t	*halt_lock;
 	pthread_mutex_t	*food_lock;
 	pthread_mutex_t	*start_lock;
+	char			*err;
 }					t_philo;
 
 typedef enum e_msg
@@ -65,9 +72,10 @@ int		halt_manager(t_philo *philo, int to_halt);
 void	start_threads(t_philo *philo, int *i);
 int		get_forks(t_philo *philo, int left, int right);
 void	print_message(t_msg msg, t_philo *philo);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(char *s, int fd);
 int		check_args(int argc, char **argv);
 void	print_usage(void);
+void	*my_mal(t_philo *philo, size_t size);
+int		unlock_mutex(t_philo *philo, pthread_mutex_t *mut);
+int		lock_mutex(t_philo *philo, pthread_mutex_t *mut);
 
 #endif

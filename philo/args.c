@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:53 by aklein            #+#    #+#             */
-/*   Updated: 2024/04/29 07:28:58 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 06:41:40 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,16 @@ static int	check_arg_content(char *arg)
 
 void	print_usage(void)
 {
-	ft_putstr_fd("Usage: ./philo <philo_count> <time_to_die> <time_to_eat> \
-<time_to_sleep> [times_each_must_eat]\n", 1);
-	ft_putstr_fd("Where:\n", 1);
-	ft_putstr_fd("\t- philo_count: Total number of philosophers.\n", 1);
-	ft_putstr_fd("\t- time_to_die: Maximum time (ms) \
-before a philosopher starves.\n", 1);
-	ft_putstr_fd("\t- time_to_eat: Time (ms) a \
-philosopher takes to eat.\n", 1);
-	ft_putstr_fd("\t- time_to_sleep: Time (ms) a \
-philosopher takes to sleep.\n", 1);
-	ft_putstr_fd("\t- time_each_must_eat: Optional, the minimum \
-number of meals each philosopher must eat.\n", 1);
-	ft_putstr_fd("Example: \n\t./philo 5 800 200 200 5\n", 1);
+	printf("Usage: ./philo_bonus <philo_count> <time_to_die> "
+		"<time_to_eat> <time_to_sleep> [times_each_must_eat]\n"
+       "Where:\n"
+       "\t- philo_count: Total number of philosophers.\n"
+       "\t- time_to_die: Maximum time (ms) before a philosopher starves.\n"
+       "\t- time_to_eat: Time (ms) a philosopher takes to eat.\n"
+       "\t- time_to_sleep: Time (ms) a philosopher takes to sleep.\n"
+       "\t- times_each_must_eat: Optional, the minimum number of "
+	   "meals each philosopher must eat.\n"
+       "Example: \n\t./philo_bonus 5 800 200 200 5\n");
 }
 
 int	check_args(int argc, char **argv)
@@ -60,9 +57,7 @@ int	check_args(int argc, char **argv)
 	{
 		if (!check_arg_content(argv[i]) || ft_atoi(argv[i]) <= 0)
 		{
-			ft_putstr_fd("invalid argument nr <", STDOUT_FILENO);
-			ft_putnbr_fd(i, STDOUT_FILENO);
-			ft_putstr_fd(">\n", STDOUT_FILENO);
+			printf("invalid argument nr <%d>\n", i);
 			print_usage();
 			return (0);
 		}
