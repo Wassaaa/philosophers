@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:55:55 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 08:43:16 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:09:47 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-# define ERR_LENGTH 128
 # define ERR_MALLOC "ERROR: malloc error"
 # define ERR_MUT_INIT "ERROR: mutex init error"
 # define ERR_MUT_DEST "ERROR: mutex destroy error"
@@ -28,6 +27,7 @@
 # define ERR_MUT_UNLOCK "ERROR: mutex unlock error"
 # define ERR_THR_C "ERROR: thread create error"
 # define ERR_THR_J "ERROR: thread join error"
+# define ERR_TIME "ERROR: gettimeofday error"
 
 typedef struct s_philo
 {
@@ -69,7 +69,7 @@ int		init_struct(t_philo *philo);
 void	*existential_cycle(void *p);
 void	free_all(t_philo *philo);
 int		sentient_pause(int ms, t_philo *philo);
-int		get_ms(struct timeval start);
+int		get_ms(t_philo *philo, struct timeval start);
 int		verify_existence(t_philo *philo);
 int		halt_manager(t_philo *philo, int to_halt);
 void	start_threads(t_philo *philo, int *i);
@@ -81,4 +81,6 @@ void	*my_mal(t_philo *philo, size_t size);
 int		unlock_mutex(t_philo *philo, pthread_mutex_t *mut);
 int		lock_mutex(t_philo *philo, pthread_mutex_t *mut);
 int		log_err(t_philo *philo, char *err);
+int		get_time(t_philo *philo, struct timeval *time);
+
 #endif

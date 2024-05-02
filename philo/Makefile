@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/05/02 06:38:53 by aklein           ###   ########.fr        #
+#    Updated: 2024/05/02 11:07:53 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,10 +105,10 @@ vglog_clean: fclean
 # NORM
 ################################################################################
 norm:
-	norminette . $(LIBFT_DIR) | grep -v "OK!" || true
+	norminette -R CheckForbiddenSourceHeader $(M_SRC_DIR) | grep -v "OK!" || true
 
 norm2:
-	norminette . $(LIBFT_DIR)
+	norminette -R CheckForbiddenSourceHeader $(M_SRC_DIR)
 
 ################################################################################
 # PHONY

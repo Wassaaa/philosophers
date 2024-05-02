@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:29:53 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 08:25:12 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:00:52 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	print_usage(void)
 {
 	printf("Usage: ./philo_bonus <philo_count> <time_to_die> "
 		"<time_to_eat> <time_to_sleep> [times_each_must_eat]\n"
-       "Where:\n"
-       "\t- philo_count: Total number of philosophers.\n"
-       "\t- time_to_die: Maximum time (ms) before a philosopher starves.\n"
-       "\t- time_to_eat: Time (ms) a philosopher takes to eat.\n"
-       "\t- time_to_sleep: Time (ms) a philosopher takes to sleep.\n"
-       "\t- times_each_must_eat: Optional, the minimum number of "
-	   "meals each philosopher must eat.\n"
-       "Example: \n\t./philo_bonus 5 800 200 200 5\n");
+		"Where:\n"
+		"\t- philo_count: Total number of philosophers.\n"
+		"\t- time_to_die: Maximum time (ms) before a philosopher starves.\n"
+		"\t- time_to_eat: Time (ms) a philosopher takes to eat.\n"
+		"\t- time_to_sleep: Time (ms) a philosopher takes to sleep.\n"
+		"\t- times_each_must_eat: Optional, the minimum number of "
+		"meals each philosopher must eat.\n"
+		"Example: \n\t./philo_bonus 5 800 200 200 5\n");
 }
 
 int	check_args(int argc, char **argv)

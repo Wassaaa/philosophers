@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:33:19 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 07:19:42 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 10:47:38 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	existential_disengagement(t_philo *philo)
 {
-	int		right_fork;
-	int		left_fork;
+	int	right_fork;
+	int	left_fork;
 
 	left_fork = philo->id;
 	right_fork = (philo->id + 1) % philo->num_philos;
@@ -39,8 +39,8 @@ static void	existential_disengagement(t_philo *philo)
 
 static int	existential_grasp(t_philo *philo)
 {
-	int		right_fork;
-	int		left_fork;
+	int	right_fork;
+	int	left_fork;
 
 	left_fork = philo->id;
 	right_fork = (philo->id + 1) % philo->num_philos;
@@ -69,7 +69,7 @@ static int	existential_meal(t_philo *philo)
 		existential_disengagement(philo);
 		return (0);
 	}
-	gettimeofday(&philo->fed, NULL);
+	get_time(philo, &philo->fed);
 	print_message(EAT, philo);
 	if (!sentient_pause(philo->to_eat, philo))
 		print_message(DIE, philo);
@@ -88,7 +88,7 @@ void	*existential_cycle(void *p)
 
 	philo = (t_philo *)p;
 	lock_mutex(philo, philo->start_lock);
-	gettimeofday(&philo->start, NULL);
+	get_time(philo, &philo->start);
 	unlock_mutex(philo, philo->start_lock);
 	philo->fed = philo->start;
 	if (philo->id % 2 == 1)

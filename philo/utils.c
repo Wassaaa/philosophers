@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 06:31:04 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 08:13:46 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:07:21 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,14 @@ int	unlock_mutex(t_philo *philo, pthread_mutex_t *mut)
 		return (1);
 	}
 	return (0);
+}
+
+int	get_time(t_philo *philo, struct timeval *time)
+{
+	if (gettimeofday(time, NULL) == -1)
+	{
+		log_err(philo, ERR_TIME);
+		return (0);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 13:57:42 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 08:28:25 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 10:33:23 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv)
 	t_philo		philo;
 	int			i;
 
+	i = 0;
 	if (!check_args(argc, argv))
 		return (1);
 	memset(&philo, 0, sizeof(t_philo));
