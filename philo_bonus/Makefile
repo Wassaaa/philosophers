@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/05/02 16:49:27 by aklein           ###   ########.fr        #
+#    Updated: 2024/05/02 17:17:59 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 ################################################################################
 CC				=	cc
 CC_STRICT		=	-Wall -Wextra -Werror -pthread
-CC_DEBUG		=	-g #-fsanitize=thread
+CC_DEBUG		=	#-g #-fsanitize=thread
 HEADERS			=	-I $(INCLUDES)
 CC_FULL			=	$(CC) $(CC_STRICT) $(HEADERS) $(CC_DEBUG)
 OBJ_DIR			=	./obj
@@ -39,6 +39,8 @@ M_SRCS			=	philo_bonus.c ft_atoi_bonus.c args_bonus.c print_bonus.c \
 vpath %.c $(M_SRC_DIR)
 
 all: $(NAME)
+
+bonus : all
 
 $(NAME): $(M_OBJECTS)
 	$(CC_FULL) $(M_OBJECTS) -o $(NAME)
@@ -106,10 +108,11 @@ vglog_clean: fclean
 # NORM
 ################################################################################
 norm:
-	norminette . $(LIBFT_DIR) | grep -v "OK!" || true
+	norminette -R CheckForbiddenSourceHeader $(M_SRC_DIR) | grep -v "OK!" || true
 
 norm2:
-	norminette . $(LIBFT_DIR)
+	norminette -R CheckForbiddenSourceHeader $(M_SRC_DIR)
+
 
 ################################################################################
 # PHONY

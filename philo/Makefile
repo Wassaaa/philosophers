@@ -6,7 +6,7 @@
 #    By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/22 13:54:57 by aklein            #+#    #+#              #
-#    Updated: 2024/05/02 11:07:53 by aklein           ###   ########.fr        #
+#    Updated: 2024/05/02 17:18:03 by aklein           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 ################################################################################
 CC				=	cc
 CC_STRICT		=	-Wall -Wextra -Werror -pthread
-CC_DEBUG		=	-g #-fsanitize=leak
+CC_DEBUG		=	#-g #-fsanitize=leak
 HEADERS			=	-I $(INCLUDES)
 CC_FULL			=	$(CC) $(CC_STRICT) $(HEADERS) $(CC_DEBUG)
 OBJ_DIR			=	./obj
