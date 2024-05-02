@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 00:20:36 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:50:23 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:31:48 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define ERR_THREAD_C "ERROR: Thread creation failed"
 # define ERR_THREAD_J "ERROR: Thread join failed"
 # define ERR_MALLOC "ERROR: Malloc failed"
-
 
 typedef struct s_philo
 {

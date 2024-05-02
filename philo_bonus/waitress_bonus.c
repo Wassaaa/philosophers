@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:39:40 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:49:43 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:22:12 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	*waitress(void *p)
 		{
 			unlock_sem(philo, philo->death);
 			lock_sem(philo, philo->print);
-			printf("all philos have eaten at least %d meals\n", philo->food);
 			usleep(10000);
 			unlock_sem(philo, philo->print);
 			break ;

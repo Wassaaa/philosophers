@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:23:04 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:28:59 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 17:04:28 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	exit_threads(t_philo *philo)
 void	error(t_philo *philo, int ret, char *msg)
 {
 	int	i;
+
 	if (philo->death)
 		unlock_sem(philo, philo->death);
 	if (philo->forks)
@@ -84,6 +85,8 @@ void	error(t_philo *philo, int ret, char *msg)
 		unlock_sem(philo, philo->lock);
 	}
 	close_sems(philo);
+	if (philo)
+		free(philo);
 	if (msg)
 		printf("%s\n", msg);
 	exit(ret);

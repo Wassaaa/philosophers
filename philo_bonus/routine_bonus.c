@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 11:22:09 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 11:23:42 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 16:46:36 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ static void	existential_meal(t_philo *philo)
 
 void	existential_cycle(t_philo *philo)
 {
+	if (philo->id % 2 == 0)
+	{
+		print_message(THINK, philo);
+		sentient_pause(philo->to_eat - 5, philo);
+	}
 	while (verify_existence(philo))
 	{
 		existential_meal(philo);
