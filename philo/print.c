@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:55:35 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 10:45:52 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 17:08:31 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ static void	print_it(t_msg msg, t_philo *philo)
 	if (ms == -1)
 		return ;
 	id = philo->id + 1;
-	if (msg == THINK)
-		philo->thinking = 1;
-	if (msg == DIE || msg == EAT || msg == SLEEP)
-		philo->thinking = 0;
 	if (msg == DIE)
 		printf("%d %d died\n", ms, id);
 	if (msg == FORK)

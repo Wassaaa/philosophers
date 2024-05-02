@@ -6,7 +6,7 @@
 /*   By: aklein <aklein@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 16:33:19 by aklein            #+#    #+#             */
-/*   Updated: 2024/05/02 10:47:38 by aklein           ###   ########.fr       */
+/*   Updated: 2024/05/02 17:09:58 by aklein           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static int	existential_grasp(t_philo *philo)
 		}
 		if (get_forks(philo, left_fork, right_fork))
 			break ;
-		if (!philo->thinking)
-			print_message(THINK, philo);
 		usleep(100);
 	}
 	if (halt_manager(philo, 0))
@@ -91,8 +89,11 @@ void	*existential_cycle(void *p)
 	get_time(philo, &philo->start);
 	unlock_mutex(philo, philo->start_lock);
 	philo->fed = philo->start;
-	if (philo->id % 2 == 1)
-		sentient_pause(1, philo);
+	if (philo->id % 2 == 0)
+	{
+		print_message(THINK, philo);
+		sentient_pause(philo->to_eat - 5, philo);
+	}
 	while (!halt_manager(philo, 0))
 	{
 		if (!existential_meal(philo))
@@ -101,8 +102,7 @@ void	*existential_cycle(void *p)
 		existential_disengagement(philo);
 		if (!sentient_pause(philo->to_sleep, philo))
 			print_message(DIE, philo);
-		if (!philo->thinking)
-			print_message(THINK, philo);
+		print_message(THINK, philo);
 	}
 	free(philo);
 	return (NULL);
