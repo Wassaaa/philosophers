@@ -1,8 +1,0 @@
-{
-   <sem_post before sem_wait shit>
-   Helgrind:Misc
-   fun:sem_wait_WRK
-   fun:sem_wait@*
-   fun:lock_sem
-   ...
-}
